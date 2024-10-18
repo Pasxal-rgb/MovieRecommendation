@@ -10,8 +10,8 @@ import model.User;
 
 public class RatingRegister {
 
-    private Map<Integer, List<Movie>> userMovies = new HashMap<>();  //Ratings von User + die bewerteten Filme
-    private Map<Integer, Map<Integer, Rating>> movieRatings; //Taing eins FIlms : Movieid, <(U_id, ratimg>
+    private Map<Integer, List<Movie>> userMovies = new HashMap<>();  //UserID + Filme die gerated wurden
+    private Map<Integer, Map<Integer, Rating>> movieRatings; //Taing eins FIlms : Movieid, <U_id, ratimg>
     private List<Movie> movies;
     private List<User> user;
 
@@ -57,10 +57,10 @@ public class RatingRegister {
             }sb.append("\n");
             for (Map.Entry<Integer, Map<Integer, Rating>> outerValuee : movieRatings.entrySet()) {
                 Map<Integer, Rating> innerMap = outerValuee.getValue();
-                Integer ui = outerValuee.getKey();
+                Integer movieId = outerValuee.getKey();
                 sb.append("\n");
                 sb.append("Movie-ID: ");
-                sb.append(ui);
+                sb.append(movieId);
                 sb.append(" --> ");
                     for (Map.Entry<Integer, Rating> x : innerMap.entrySet()) {
                         Integer uid = x.getKey();
