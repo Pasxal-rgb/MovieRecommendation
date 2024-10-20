@@ -81,4 +81,28 @@ public class MovieRecommendation {
 
                 });
     }
+
+
+    //TO-DO: Fall: User hat noch keine Filme bewertet und innerMap muss neu erstellt werden für den User.
+    public void rateMovie(User user, Movie movie, Rating rating){
+        if(!this.movieRatings.isEmpty()) {
+            boolean alreadyRatedByUser = this.movieRatings.get(user.getU_id()).containsValue(movie);
+            if (!alreadyRatedByUser) {
+
+                Map<Integer, Rating> innerMap = this.movieRatings.get(user.getU_id());
+                innerMap.put(movie.getId(), rating);
+                this.movieRatings.put(user.getU_id(), innerMap);
+
+            } else {
+                System.out.println("Der User " + user.getName() + " hat für den Film " + movie.getTitle() + " bereits ein Rating von " + rating.toString() + " abgegeben.");
+            }
+
+        }else{
+            Map<Integer,Rating> innerMap = new HashMap<>();
+            innerMap.put(movie.getId(), rating);
+            this.movieRatings.put(user.getU_id(),innerMap);
+
+        }
+
+    }
 }
