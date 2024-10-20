@@ -87,8 +87,12 @@ public class MovieRecommendation {
     public void rateMovie(User user, Movie movie, Rating rating){
         if(!this.movieRatings.isEmpty()) {
             boolean alreadyRatedByUser = this.movieRatings.get(user.getU_id()).containsValue(movie);
-            if (!alreadyRatedByUser) {
-
+            if(!this.movieRatings.containsKey(user.getU_id())){
+                 Map<Integer, Rating> innerMap = new HashMap<>();
+                innerMap.put(movie.getId(), rating);
+                this.movieRatings.put(user.getU_id(), innerMap);
+            }
+            if(!alreadyRatedByUser) {
                 Map<Integer, Rating> innerMap = this.movieRatings.get(user.getU_id());
                 innerMap.put(movie.getId(), rating);
                 this.movieRatings.put(user.getU_id(), innerMap);
