@@ -59,6 +59,7 @@ public class Main {
         Map<Integer, List<Movie>> userMovies2 = mRec.getUserMovies();
         if(userMovies2 != null) System.out.println("success2");
 
+        mRec.rateMovie(userer, mv, Rating.FIVE);
 
         System.out.println(rg.toString());
 
@@ -68,7 +69,10 @@ public class Main {
 
          Map<Integer,List<Movie>>  userMovieListe = rg.getUserMovies();
 
-mRec.userMovieListToString();
+         Movie movie = new Movie(30,"Haus der 100 Leichen");
+         mRec.rateMovie(userer, movie ,Rating.FIVE);
+
+         //rg.toString();
 /*
 
         for (Map.Entry<Integer, List<Movie>> entry : mRec.getUserMovies().entrySet()) {

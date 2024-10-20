@@ -8,6 +8,10 @@ import rating.RatingRegister;
 import java.util.*;
 import java.util.function.Predicate;
 
+
+//List User und List Movie hinzufügen, in den Konstruktor und Methoden aktualisieren,
+
+
 public class MovieRecommendation {
 
     private Map<Integer, Map<Integer, Rating>> movieRatings;
@@ -58,8 +62,6 @@ public class MovieRecommendation {
                 List<Movie> mList = new ArrayList<>();
                 mList.add(movie);
                 this.userMovies.put(user.getU_id(), mList);
-            }else{
-                System.out.println("Kein User vorhanden.");
             }
 
             }catch(Exception e){
@@ -83,30 +85,54 @@ public class MovieRecommendation {
     }
 
 
-    //TO-DO: Fall: User hat noch keine Filme bewertet und innerMap muss neu erstellt werden für den User.
-    public void rateMovie(User user, Movie movie, Rating rating){
-        if(!this.movieRatings.isEmpty()) {
-            boolean alreadyRatedByUser = this.movieRatings.get(user.getU_id()).containsValue(movie);
-            if(!this.movieRatings.containsKey(user.getU_id())){
-                 Map<Integer, Rating> innerMap = new HashMap<>();
-                innerMap.put(movie.getId(), rating);
-                this.movieRatings.put(user.getU_id(), innerMap);
-            }
-            if(!alreadyRatedByUser) {
-                Map<Integer, Rating> innerMap = this.movieRatings.get(user.getU_id());
-                innerMap.put(movie.getId(), rating);
-                this.movieRatings.put(user.getU_id(), innerMap);
+    public Movie recommendTopRated(){
+        return null;
+    }
 
-            } else {
-                System.out.println("Der User " + user.getName() + " hat für den Film " + movie.getTitle() + " bereits ein Rating von " + rating.toString() + " abgegeben.");
+
+    public Movie getHighestRating(Map<Integer,Rating> innerMap){
+        Rating maxRating = null;
+        Movie maxScoring = null;
+        int counter = 0;
+        int mId = 0;
+        for(Map.Entry<Integer, Rating> entry : innerMap.entrySet()){
+            Rating currentRating = entry.getValue();
+            if(Integer.parseInt(currentRating.toString()) > Integer.parseInt(maxRating.toString())) {
+                maxRating = currentRating;
+            }
+            if(entry.getValue().equals(maxRating)){
+                mId = entry.getKey();
+                counter++;
+
+            }
+            if(entry.getKey() == mId){
+                // moviesList
             }
 
-        }else{
-            Map<Integer,Rating> innerMap = new HashMap<>();
-            innerMap.put(movie.getId(), rating);
-            this.movieRatings.put(user.getU_id(),innerMap);
 
         }
+        return null;
+    }
 
+
+
+
+
+    public void rateMovie(User user, Movie movie, Rating rating){
+        Map <Integer, Rating> innerMap = this.movieRatings.get(user.getU_id());
+
+        if(innerMap == null){
+            Map<Integer, Rating> freshInnerMap = new HashMap<>();
+            freshInnerMap.put(movie.getId(), rating);
+           this.movieRatings.put(user.getU_id(), freshInnerMap);
+            System.out.println("User und dessen liste wurden erstellt.");
+        }
+        if(innerMap != null && !innerMap.containsKey(movie.getId())){
+            innerMap.put(movie.getId(), rating);
+            this.movieRatings.put(user.getU_id(), innerMap);
+            System.out.println("Rating wurde in bestehende innerMap hinzugefügt.");
+        } else if(innerMap.containsKey(movie.getId()) && this.movieRatings.containsKey(user.getU_id())){
+            System.out.println("USer "+ user.getName()+ " hat den Film mit der ID "+movie.getTitle()+" breits mit dem Rating "+ this.movieRatings.get(user.getU_id()).get(movie.getId()));
+        }
     }
 }

@@ -77,6 +77,8 @@ public class RatingRegister {
         return sb.toString();
     }
 
+
+
     public static class RatingRegisterBuilder {
 
         private Map<Integer, List<Movie>> userMovies;  //Ratings von User + die bewerteten Filme
