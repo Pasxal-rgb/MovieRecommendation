@@ -8,7 +8,7 @@ import rating.RatingRegister;
 import java.util.*;
 import java.util.function.Predicate;
 
-
+//Instanzvariable RatingRegister--->sämtliche Methoden synchrobisieren in Bezug auf beide Klassen und deren Listen
 //List User und List Movie hinzufügen, in den Konstruktor und Methoden aktualisieren,
 
 
@@ -64,6 +64,7 @@ public class MovieRecommendation {
                 this.userMovies.put(user.getU_id(), mList);
             }
 
+
             }catch(Exception e){
             System.out.println(e);
 
@@ -90,24 +91,26 @@ public class MovieRecommendation {
     }
 
 
-    public Movie getHighestRating(Map<Integer,Rating> innerMap){
+    public List<Movie> getHighestRating(Map<Integer,Rating> innerMap, RatingRegister rg){
         Rating maxRating = null;
         Movie maxScoring = null;
-        int counter = 0;
-        int mId = 0;
+        List<Movie> mVList = new ArrayList<>();
+        List<Integer> mId = new ArrayList<>();
         for(Map.Entry<Integer, Rating> entry : innerMap.entrySet()){
             Rating currentRating = entry.getValue();
             if(Integer.parseInt(currentRating.toString()) > Integer.parseInt(maxRating.toString())) {
                 maxRating = currentRating;
             }
             if(entry.getValue().equals(maxRating)){
-                mId = entry.getKey();
-                counter++;
-
+                mId.add(entry.getKey());
             }
-            if(entry.getKey() == mId){
-                // moviesList
-            }
+           int i = 0;
+            List<Movie> movies = rg.getMovies();
+            for(Movie mv : movies){
+                if(mv.getId() == mId.get(i)){
+                    mVList.add(mv);
+                }i++;
+            } return mVList;
 
 
         }
