@@ -10,14 +10,18 @@ import java.util.function.Predicate;
 
 //Instanzvariable RatingRegister--->sämtliche Methoden synchrobisieren in Bezug auf beide Klassen und deren Listen
 //List User und List Movie hinzufügen, in den Konstruktor und Methoden aktualisieren,
+//Verantwortlichkeiten überdenken, RATing Register und Recommendation zum empfehlen
+//Aufräumen.
 
 
 public class MovieRecommendation {
 
     private Map<Integer, Map<Integer, Rating>> movieRatings;
     private Map<Integer, List<Movie>> userMovies;
+    public RatingRegister rg;
 
     public MovieRecommendation(RatingRegister rg){
+        this.rg = rg;
         try {
             if (rg != null && rg.getMovieRatings() != null) {
                 this.movieRatings = rg.getMovieRatings();
@@ -86,56 +90,5 @@ public class MovieRecommendation {
     }
 
 
-    public Movie recommendTopRated(){
-        return null;
-    }
 
-
-    public List<Movie> getHighestRating(Map<Integer,Rating> innerMap, RatingRegister rg){
-        Rating maxRating = null;
-        Movie maxScoring = null;
-        List<Movie> mVList = new ArrayList<>();
-        List<Integer> mId = new ArrayList<>();
-        for(Map.Entry<Integer, Rating> entry : innerMap.entrySet()){
-            Rating currentRating = entry.getValue();
-            if(Integer.parseInt(currentRating.toString()) > Integer.parseInt(maxRating.toString())) {
-                maxRating = currentRating;
-            }
-            if(entry.getValue().equals(maxRating)){
-                mId.add(entry.getKey());
-            }
-           int i = 0;
-            List<Movie> movies = rg.getMovies();
-            for(Movie mv : movies){
-                if(mv.getId() == mId.get(i)){
-                    mVList.add(mv);
-                }i++;
-            } return mVList;
-
-
-        }
-        return null;
-    }
-
-
-
-
-
-    public void rateMovie(User user, Movie movie, Rating rating){
-        Map <Integer, Rating> innerMap = this.movieRatings.get(user.getU_id());
-
-        if(innerMap == null){
-            Map<Integer, Rating> freshInnerMap = new HashMap<>();
-            freshInnerMap.put(movie.getId(), rating);
-           this.movieRatings.put(user.getU_id(), freshInnerMap);
-            System.out.println("User und dessen liste wurden erstellt.");
-        }
-        if(innerMap != null && !innerMap.containsKey(movie.getId())){
-            innerMap.put(movie.getId(), rating);
-            this.movieRatings.put(user.getU_id(), innerMap);
-            System.out.println("Rating wurde in bestehende innerMap hinzugefügt.");
-        } else if(innerMap.containsKey(movie.getId()) && this.movieRatings.containsKey(user.getU_id())){
-            System.out.println("USer "+ user.getName()+ " hat den Film mit der ID "+movie.getTitle()+" breits mit dem Rating "+ this.movieRatings.get(user.getU_id()).get(movie.getId()));
-        }
-    }
 }

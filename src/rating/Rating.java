@@ -12,20 +12,14 @@ package rating;
 
         @Override
         public String toString() {
-            switch (this) {
-                case ONE:
-                    return "1";
-                case TWO:
-                    return "2";
-                case THREE:
-                    return "3";
-                case FOUR:
-                    return "4";
-                case FIVE:
-                    return "5";
-                default:
-                    return super.toString();
-            }
+            return switch (this) {
+                case ONE -> "1";
+                case TWO -> "2";
+                case THREE -> "3";
+                case FOUR -> "4";
+                case FIVE -> "5";
+                default -> super.toString();
+            };
 
         }
     }

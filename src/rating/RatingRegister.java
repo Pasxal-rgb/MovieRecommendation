@@ -1,9 +1,7 @@
 package rating;
+import java.util.*;
 import java.util.stream.Collectors;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+
 import model.Movie;
 import model.User;
 
@@ -12,7 +10,7 @@ public class RatingRegister {
 
     private Map<Integer, List<Movie>> userMovies = new HashMap<>();  //UserID + Filme die gerated wurden
     private Map<Integer, Map<Integer, Rating>> movieRatings; //Taing eins FIlms : Movieid, <U_id, ratimg>
-    private List<Movie> movies;
+    private List<Movie> movies = new ArrayList<>();
     private List<User> user;
 
     private RatingRegister(RatingRegisterBuilder rrb) {
@@ -21,6 +19,8 @@ public class RatingRegister {
         this.movies = rrb.movies;
         this.user = rrb.user;
     }
+
+    //Methoden zum Hinzufügen von filmen und co
 
 
     public Map<Integer, List<Movie>> getUserMovies() {
@@ -75,6 +75,66 @@ public class RatingRegister {
                 }
             }
         return sb.toString();
+    }
+
+    public Movie recommendTopRated(){
+        return null;
+    }
+
+
+
+
+    public void rateMovie(User user, Movie movie, Rating rating){
+        Map <Integer, Rating> innerMap = this.movieRatings.get(user.getU_id());
+
+        if(innerMap == null){
+            Map<Integer, Rating> freshInnerMap = new HashMap<>();
+            freshInnerMap.put(movie.getId(), rating);
+            this.movieRatings.put(user.getU_id(), freshInnerMap);
+            System.out.println("User und dessen liste wurden erstellt.");
+        }
+        if(innerMap != null && !innerMap.containsKey(movie.getId())){
+            innerMap.put(movie.getId(), rating);
+            this.movieRatings.put(user.getU_id(), innerMap);
+            System.out.println("Rating wurde in bestehende innerMap hinzugefügt.");
+        } else if(innerMap.containsKey(movie.getId()) && this.movieRatings.containsKey(user.getU_id())){
+            System.out.println("USer "+ user.getName()+ " hat den Film mit der ID "+movie.getTitle()+" breits mit dem Rating "+ this.movieRatings.get(user.getU_id()).get(movie.getId())+ " bewertet,");
+        }
+    }
+
+    public List<Movie> getHighestRating(){
+        Rating maxRating = Rating.ONE;
+        Rating currentRating = null;
+        List<Movie> mVList = new ArrayList<>();
+        List<Integer> mId = new ArrayList<>();
+
+        for(Map.Entry<Integer, Map<Integer, Rating>> entry : this.getMovieRatings().entrySet()) {
+            Map<Integer, Rating> subs = entry.getValue();
+            for (Map.Entry<Integer, Rating> ratVal : subs.entrySet()) {
+                currentRating = ratVal.getValue();
+                if (currentRating.compareTo(maxRating) > 0) {
+                    maxRating = currentRating;
+                }
+
+            }
+
+            if (subs.containsValue(maxRating)) {
+                mId.add(entry.getKey());
+            }
+        }
+        int i = 0;
+        List<Movie> movies = this.getMovies();
+        if(movies != null) {
+            for (Movie mv : movies) {
+                if (i < mId.size() && mv.getId() == mId.get(i)) {
+                    mVList.add(mv);
+                }
+                i++;
+            }
+            return mVList;
+        }else{
+            return new ArrayList<>();
+        }
     }
 
 
