@@ -2,14 +2,28 @@ package rating;
 
 
     public enum Rating {
-        NOT_RATED,
-        ONE,
-        TWO,
-        THREE,
-        FOUR,
-        FIVE;
+        NOT_RATED(-1),
+        ONE(1),
+        TWO(2),
+        THREE(3),
+        FOUR(4),
+        FIVE(5);
 
 
+        private final int value;
+
+        Rating(int value) {
+            this.value = value;
+        }
+
+
+        public int getValue() {
+            return this.value;
+        }
+
+        public boolean isRated(){
+            return this != NOT_RATED;
+        }
         @Override
         public String toString() {
             return switch (this) {
@@ -20,6 +34,9 @@ package rating;
                 case FIVE -> "5";
                 default -> super.toString();
             };
+
+
+
 
         }
     }

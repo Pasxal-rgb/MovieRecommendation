@@ -25,6 +25,7 @@ public class Main {
         Map<Integer, Rating> userRatings = new HashMap<>();
         userRatings.put(1, Rating.FIVE);
         userRatings.put(2, Rating.FOUR);
+        userRatings.put(3, Rating.TWO );
 
         movieRatings.put(1, userRatings);  // movie ID 1 (Inception) has some ratings
 
@@ -39,8 +40,11 @@ public class Main {
         List<Movie> highestRatedMovies = rrg.getHighestRating();
 
         for (Movie movie : highestRatedMovies) {
-            System.out.println("Highest rated movie: " + movie.getTitle());
+            System.out.println("Highest rated movie: ID und Titel: " +movie.getId()+", "+ movie.getTitle());
         }
+
+        double  d  = rrg.getAverageRating(movies.get(0));
+        System.out.println("Durchschnittliche Bewerung für den Film" + movies.get(0).getTitle()+": "+d);
 
 
     }

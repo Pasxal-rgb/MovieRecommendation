@@ -102,6 +102,37 @@ public class RatingRegister {
         }
     }
 
+    public double getAverageRating(Movie movie){
+        List<Rating> movieRatingsForSingleMovie = new ArrayList<>();
+        double sum = 0.0;
+        double ratingCount = 0.0;
+        if(this.movieRatings != null){
+            Set<Map.Entry<Integer, Map<Integer, Rating>>> innerMovieRatingsMap1 = this.movieRatings.entrySet();
+            System.out.println("Movie ID to filter: " + movie.getId());
+            innerMovieRatingsMap1.forEach(entry -> {
+                System.out.println("Checking Movie ID: " + entry.getKey());
+            });
+        Set<Map.Entry<Integer, Map<Integer, Rating>>> innerMovieRatingsMap = this.movieRatings.entrySet();
+        List<Rating> ratingForSingleMovie = innerMovieRatingsMap.stream()
+                .filter(entry -> entry.getKey().equals(movie.getId()))
+                .flatMap(
+                        entry -> entry.getValue().values().stream())
+                .filter(Rating::isRated)
+                .toList();
+
+        for(Rating r: ratingForSingleMovie) {
+            ratingCount++;
+            sum += r.getValue();
+            System.out.println("Rating Value: " + r.getValue()); // Ausgabe des Werts
+
+        }
+
+            System.out.println("Sum: " + sum);
+            System.out.println("Rating Count: " + ratingCount);
+        }return ratingCount > 0 ? sum / (double)ratingCount : 0;
+    }
+
+
     public List<Movie> getHighestRating(){
         Rating maxRating = Rating.ONE;
         Rating currentRating = null;
