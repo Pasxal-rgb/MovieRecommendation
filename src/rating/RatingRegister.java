@@ -81,6 +81,44 @@ public class RatingRegister {
         return null;
     }
 
+    public void addUserovie(User user, Movie movie){
+        try {
+            if(!this.userMovies.isEmpty()) {
+                boolean movieInList = this.userMovies.values().stream()
+                        .flatMap(List::stream) //Aus der Liste wird ein Strom von   Strings
+                        .anyMatch(x -> x.equals(movie));
+            }
+            boolean userInList = this.userMovies.containsKey(user.getU_id());
+
+            if (userInList && !userMovies.isEmpty()) {
+                this.userMovies.get(user.getU_id()).add(movie);
+            }
+            if(!userInList && !userMovies.isEmpty()){
+                List<Movie> mList = new ArrayList<>();
+                mList.add(movie);
+                this.userMovies.put(user.getU_id(), mList);
+            }
+
+
+        }catch(Exception e){
+            System.out.println(e);
+
+
+        }
+    }
+
+    public void userMovieListToString() {
+        this.userMovies.entrySet().stream()
+                .forEach(entry -> {
+                    Integer uid = entry.getKey();
+                    List<Movie> mvListe = entry.getValue();
+                    System.out.println("UID: " + uid);
+
+                    mvListe.stream()
+                            .forEach(movie -> System.out.println(movie.getTitle()));
+
+                });
+    }
 
 
 
@@ -129,7 +167,7 @@ public class RatingRegister {
 
             System.out.println("Sum: " + sum);
             System.out.println("Rating Count: " + ratingCount);
-        }return ratingCount > 0 ? sum / (double)ratingCount : 0;
+        }return ratingCount > 0 ? (double) Math.round((sum / (double) ratingCount) * 100) /100 : 0;
     }
 
 
@@ -211,3 +249,4 @@ public class RatingRegister {
 
     }
 }
+

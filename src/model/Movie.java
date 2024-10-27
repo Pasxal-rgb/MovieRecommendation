@@ -4,10 +4,20 @@ public class Movie {
 
     private int id;
     private String title;
+    private Genre genre;
 
-    public Movie(int id, String name) {
+    public Movie(int id, String name, Genre genre) {
         this.id = id;
         this.title = name;
+        this.genre = genre;
+    }
+
+    public Genre getGenre() {
+        return genre;
+    }
+
+    public void setGenre(Genre genre) {
+        this.genre = genre;
     }
 
     public int getId() {

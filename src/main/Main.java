@@ -17,8 +17,8 @@ public class Main {
     public static void main(String[] args) {
 
         List<Movie> movies = new ArrayList<>(Arrays.asList(
-                new Movie(1, "Inception"),
-                new Movie(2, "Titanic")
+                new Movie(1, "Inception", "Western"),
+                new Movie(2, "Titanic", "Drama")
         ));
 
         Map<Integer, Map<Integer, Rating>> movieRatings = new HashMap<>();
