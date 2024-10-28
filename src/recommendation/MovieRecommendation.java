@@ -36,7 +36,7 @@ public class MovieRecommendation {
     }
 
 
-    public Map<Genre, Integer> getUserFavouriteGenre(User user){
+    public Map<Genre, Integer> getUserFavouriteGenres(User user){
         Map<Genre, Integer> genreCount = new HashMap<>();
         List<Movie> movies = this.userMovies.get(user.getU_id());
         List<Genre> genreList = new ArrayList<>();
