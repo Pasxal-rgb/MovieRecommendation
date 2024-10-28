@@ -1,5 +1,6 @@
 package main;
 
+import model.Genre;
 import model.User;
 import model.Movie;
 import rating.Rating;
@@ -17,8 +18,8 @@ public class Main {
     public static void main(String[] args) {
 
         List<Movie> movies = new ArrayList<>(Arrays.asList(
-                new Movie(1, "Inception", "Western"),
-                new Movie(2, "Titanic", "Drama")
+                new Movie(1, "Inception", Genre.ACTION),
+                new Movie(2, "Titanic", Genre.DRAMA)
         ));
 
         Map<Integer, Map<Integer, Rating>> movieRatings = new HashMap<>();

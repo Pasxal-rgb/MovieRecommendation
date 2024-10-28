@@ -1,4 +1,5 @@
 package recommendation;
+import model.Genre;
 import model.Movie;
 import model.User;
 import rating.Rating;
@@ -35,5 +36,36 @@ public class MovieRecommendation {
     }
 
 
+    public Map<Genre, Integer> getUserFavouriteGenre(User user){
+        Map<Genre, Integer> genreCount = new HashMap<>();
+        List<Movie> movies = this.userMovies.get(user.getU_id());
+        List<Genre> genreList = new ArrayList<>();
+        if(movies != null){
+            for(Movie movie : movies){
+                Genre g = movie.getGenre();
+                genreList.add(g);
+            }
 
-}
+           int actionCount = Collections.frequency(genreList, Genre.ACTION);
+           int dramaCount = Collections.frequency(genreList, Genre.DRAMA);
+           int scienceFictionCount = Collections.frequency(genreList, Genre.SCIENCEFICTION);
+           int westernCount = Collections.frequency(genreList, Genre.WESTERN);
+           int komödienAcount = Collections.frequency(genreList, Genre.KOMÖDIE);
+           int misteryCount = Collections.frequency(genreList, Genre.MISTERY);
+
+           genreCount.put(Genre.ACTION,actionCount);
+           genreCount.put(Genre.DRAMA, dramaCount);
+           genreCount.put(Genre.SCIENCEFICTION, scienceFictionCount);
+           genreCount.put(Genre.WESTERN, westernCount);
+           genreCount.put(Genre.KOMÖDIE, komödienAcount);
+           genreCount.put(Genre.MISTERY, misteryCount);
+
+            }return genreCount;
+        }
+
+        public int getGenreAffinityScore(User user1, User user2){
+        return 0;
+        }
+    }
+
+
